@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 echo The original creator of the script is ltx0101
 echo .
 echo .
