@@ -1,4 +1,4 @@
-# Windows-Simple-Cleaning-Script
+# Windows Simple Cleaning Script
 A simple and fast script that cleans all the junk on your PC
 
 Always run as administrator
