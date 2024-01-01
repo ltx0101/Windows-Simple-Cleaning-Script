@@ -12,6 +12,7 @@ Choose:
 1. Clean
 2. Optimize
 3. Clean and Optimize
+4. Upgrade All Apps
 0. Exit
 "@
 
@@ -36,7 +37,7 @@ if ($choice -eq "1") {
 
 if ($choice -eq "2") {
     sfc /scannow
-    chkdsk
+    chkdsk /F C:
     DISM /Online /Cleanup-Image /RestoreHealth
     sfc /scannow
 
@@ -61,7 +62,7 @@ if ($choice -eq "3") {
 
     Write-Host "This is going to take a while..."
     sfc /scannow
-    chkdsk
+    chkdsk /F C:
     DISM /Online /Cleanup-Image /RestoreHealth
     sfc /scannow
 
@@ -75,6 +76,20 @@ if ($choice -eq "3") {
     }
 }
 
+if ($choice -eq "4") {
+	# Install Winget if not already installed
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing Winget..."
+    Invoke-Expression -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://aka.ms/installwinget'))"
+    } else {
+    Write-Host "Winget is already installed."
+    }
+
+    # Open a new PowerShell window to upgrade all installed apps using Winget
+    Write-Host "Opening a new PowerShell window to upgrade all installed apps..."
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command winget upgrade --all" -Wait
+}
 if ($choice -eq "0") {
     Exit
 }
+Read-Host 'Press Enter to exit'
